@@ -304,6 +304,11 @@ fun HomeScreen(navController: NavHostController) {
 }
 
 @Composable
+fun Dialog(onDismissRequest: () -> Unit, content: @Composable () -> Unit) {
+    TODO("Not yet implemented")
+}
+
+@Composable
 fun QuickAccessCard(title: String, icon: androidx.compose.ui.graphics.vector.ImageVector) {
     Card(
         modifier = Modifier

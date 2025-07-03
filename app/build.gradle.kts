@@ -1,8 +1,11 @@
 
+
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
@@ -31,13 +34,9 @@ android {
         compose = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.0"
-    }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+
+
 }
 
 dependencies {
@@ -55,6 +54,7 @@ dependencies {
     implementation(libs.junit.ktx)
     implementation(libs.firebase.database)
     implementation(libs.ui.android)
+    implementation(libs.room.common.jvm)
 
 }
 

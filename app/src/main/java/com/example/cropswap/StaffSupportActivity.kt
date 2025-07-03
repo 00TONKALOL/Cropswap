@@ -11,6 +11,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.cropswap.ui.theme.CROPSWAPTheme
+import androidx.core.net.toUri
 
 data class Officer(val name: String, val role: String, val phone: String)
 
@@ -25,7 +27,7 @@ class StaffSupportActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            CROPNOVATheme {
+            CROPSWAPTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     OfficerList(officers)
                 }
@@ -53,9 +55,8 @@ fun OfficerList(officers: List<Officer>) {
 
                     Button(onClick = {
                         val intent = Intent(Intent.ACTION_DIAL).apply {
-                            data = Uri.parse("tel:${officer.phone}")
+                            data = "tel:${officer.phone}".toUri()
                         }
-                        it.context.startActivity(intent)
                     }) {
                         Text("Contact Officer")
                     }

@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -22,6 +23,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.window.Dialog
+import com.example.cropswap.ui.theme.CROPSWAPTheme
 
 class TenderActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +31,7 @@ class TenderActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            CROPNOVATheme {
+            CROPSWAPTheme {
                 TenderScreen()
             }
         }
@@ -42,6 +44,7 @@ data class Tender(
     val description: String
 )
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TenderScreen() {
     val context = LocalContext.current
