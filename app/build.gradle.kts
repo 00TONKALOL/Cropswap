@@ -1,9 +1,8 @@
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     alias(libs.plugins.google.gms.google.services)
-    alias(libs.plugins.kotlin.compose)
-    id("kotlin-kapt")
 }
 
 android {
@@ -32,16 +31,12 @@ android {
         compose = true
     }
 
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.0"
+    }
 
     kotlinOptions {
-        compileOptions {
-            sourceCompatibility = JavaVersion.VERSION_1_8
-            targetCompatibility = JavaVersion.VERSION_1_8
-        }
-
-        kotlin {
-            jvmToolchain(8)
-        }
+        jvmTarget = "1.8"
     }
 }
 
@@ -60,12 +55,7 @@ dependencies {
     implementation(libs.junit.ktx)
     implementation(libs.firebase.database)
     implementation(libs.ui.android)
-    implementation("androidx.room:room-runtime:2.6.1")
-    kapt("androidx.room:room-compiler:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
-    implementation("com.google.firebase:firebase-firestore-ktx:24.10.0")
-    implementation("com.google.firebase:firebase-auth-ktx:22.3.0")
-    implementation("com.google.firebase:firebase-database-ktx:20.3.0")
+
 }
 
 
