@@ -1,3 +1,29 @@
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.example.cropswap.MainActivity
+import com.example.cropswap.ui.theme.CROPSWAPTheme
+import com.google.firebase.auth.FirebaseAuth
+
 class SignUpActivity : ComponentActivity() {
     private val auth = FirebaseAuth.getInstance()
 
@@ -10,7 +36,7 @@ class SignUpActivity : ComponentActivity() {
             var confirmPassword by remember { mutableStateOf("") }
             var loading by remember { mutableStateOf(false) }
 
-            CROPNOVATheme {
+            CROPSWAPTheme {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -53,14 +79,12 @@ class SignUpActivity : ComponentActivity() {
                             Toast.makeText(this@SignUpActivity, "Passwords don't match", Toast.LENGTH_SHORT).show()
                             return@Button
                         }
-                        loading = true
                         auth.createUserWithEmailAndPassword(email, password)
                             .addOnSuccessListener {
                                 startActivity(Intent(this@SignUpActivity, MainActivity::class.java))
                                 finish()
                             }
                             .addOnFailureListener {
-                                loading = false
                                 Toast.makeText(this@SignUpActivity, "Sign up failed", Toast.LENGTH_SHORT).show()
                             }
                     }, modifier = Modifier.fillMaxWidth()) {
@@ -71,4 +95,5 @@ class SignUpActivity : ComponentActivity() {
         }
     }
 }
+
 
