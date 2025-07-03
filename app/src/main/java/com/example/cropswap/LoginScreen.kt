@@ -27,26 +27,21 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import coil3.compose.rememberAsyncImagePainter
 
 @Composable
 fun LoginScreen(
-    onLogin: (String, String, String?) -> Unit,
+    onLogin: (String, String) -> Unit,
     onSignUpClick: () -> Unit,
     onThemeToggle: () -> Unit,
     isLoading: Boolean,
     errorMessage: String?,
-    onForgotPassword: Any
+    onForgotPassword:(String)  -> Unit
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var profilePhotoUri by remember { mutableStateOf<Uri?>(null) }
     var isLoading by remember { mutableStateOf(false) }
     val context = LocalContext.current
-    val pickImageLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        if (uri != null) {
-            profilePhotoUri = uri
-        }
-    }
 
     Column(
         modifier = Modifier
@@ -55,31 +50,7 @@ fun LoginScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Profile photo avatar
-        Box(
-            modifier = Modifier
-                .size(96.dp)
-                .clip(CircleShape)
-                .background(Color.LightGray)
-                .clickable { pickImageLauncher.launch("image/*") },
-            contentAlignment = Alignment.Center
-        ) {
-
-            if (profilePhotoUri != null) {
-                val profilePhotoUri = "https://example.com/profile.jpg"
-                Image(
-                    painter = rememberAsyncImagePainter(profilePhotoUri),
-                    contentDescription = "Profile Photo",
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                )
-            } else {
-                Icon(Icons.Default.AccountCircle, contentDescription = "Pick Profile Photo", modifier = Modifier.size(96.dp), tint = Color.Gray)
-            }
-        }
-
         Spacer(Modifier.height(16.dp))
-
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
@@ -87,9 +58,7 @@ fun LoginScreen(
             leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
             modifier = Modifier.fillMaxWidth()
         )
-
         Spacer(Modifier.height(8.dp))
-
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
@@ -98,29 +67,24 @@ fun LoginScreen(
             leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
             modifier = Modifier.fillMaxWidth()
         )
-
         Spacer(Modifier.height(24.dp))
-
         if (isLoading) {
             CircularProgressIndicator()
         } else {
             Button(
                 onClick = {
                     isLoading = true
-                    onLogin(email.trim(), password, profilePhotoUri?.toString())
+                    onLogin(email.trim(), password)
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Login")
             }
         }
-
         Spacer(Modifier.height(12.dp))
-
         TextButton(onClick = onSignUpClick) {
             Text("Don't have an account? Sign up")
         }
-
         TextButton(onClick = onThemeToggle) {
             Text("Toggle Theme")
         }
