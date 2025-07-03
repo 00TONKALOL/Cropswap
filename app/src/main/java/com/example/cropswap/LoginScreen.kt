@@ -1,14 +1,52 @@
 import androidx.compose.runtime.Composable
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.unit.dp
+import android.net.Uri
+
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 
 @Composable
 fun LoginScreen(
-    onLogin: (String, String) -> Unit,
+    onLogin: (String, String, String?) -> Unit,
     onSignUpClick: () -> Unit,
-    onThemeToggle: () -> Unit
+    onThemeToggle: () -> Unit,
+    isLoading: Boolean,
+    errorMessage: String?,
+    onForgotPassword: Any
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var profilePhotoUri by remember { mutableStateOf<Uri?>(null) }
     var isLoading by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+    val pickImageLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        if (uri != null) {
+            profilePhotoUri = uri
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -17,7 +55,28 @@ fun LoginScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Welcome to CropNova", style = MaterialTheme.typography.headlineMedium)
+        // Profile photo avatar
+        Box(
+            modifier = Modifier
+                .size(96.dp)
+                .clip(CircleShape)
+                .background(Color.LightGray)
+                .clickable { pickImageLauncher.launch("image/*") },
+            contentAlignment = Alignment.Center
+        ) {
+
+            if (profilePhotoUri != null) {
+                val profilePhotoUri = "https://example.com/profile.jpg"
+                Image(
+                    painter = rememberAsyncImagePainter(profilePhotoUri),
+                    contentDescription = "Profile Photo",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            } else {
+                Icon(Icons.Default.AccountCircle, contentDescription = "Pick Profile Photo", modifier = Modifier.size(96.dp), tint = Color.Gray)
+            }
+        }
 
         Spacer(Modifier.height(16.dp))
 
@@ -48,7 +107,7 @@ fun LoginScreen(
             Button(
                 onClick = {
                     isLoading = true
-                    onLogin(email.trim(), password)
+                    onLogin(email.trim(), password, profilePhotoUri?.toString())
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {

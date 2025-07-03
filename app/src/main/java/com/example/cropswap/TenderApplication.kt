@@ -11,5 +11,6 @@ data class TenderApplication(
     val tenderDescription: String,
     val applicantName: String,
     val applicantContact: String,
-    val timestamp: Long
+    val timestamp: Long,
+    val profilePhotoUri: String? = null
 ) 
