@@ -13,6 +13,7 @@ junit-ktx = "1.2.1"
 google-gms-google-services = "4.4.3"
 firebase-database = "21.0.0"
 ui-android = "1.8.3"
+kotlin-version = "2.2.0"
 
 [libraries]
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
@@ -23,8 +24,8 @@ navigation-compose = { module = "androidx.navigation:navigation-compose", versio
 firebase-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx", version = "23.2.1" }
 firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx", version = "25.1.4" }
 lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
+ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version = "1.9.0-beta02" }
+ui = { module = "androidx.compose.ui:ui", version = "1.9.0-beta02" }
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose" }
 junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junit-ktx" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebase-database" }
@@ -39,3 +40,4 @@ firebase = ["firebase-auth-ktx", "firebase-firestore-ktx"]
 android-application = { id = "com.android.application", version = "8.11.0" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version = "2.2.0" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "google-gms-google-services" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin-version" }
