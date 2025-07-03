@@ -160,7 +160,19 @@ fun HomeScreen(navController: NavHostController) {
                 .background(MaterialTheme.colorScheme.background),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(
+                onClick = {
+                    context.startActivity(android.content.Intent(context, WelcomeActivity::class.java))
+                    if (context is android.app.Activity) context.finish()
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp)
+            ) {
+                Text("Back to Welcome")
+            }
+            Spacer(modifier = Modifier.height(16.dp))
             Text("Welcome to CropSwap!", fontSize = 24.sp, fontWeight = FontWeight.Bold)
             Spacer(modifier = Modifier.height(16.dp))
             Row(

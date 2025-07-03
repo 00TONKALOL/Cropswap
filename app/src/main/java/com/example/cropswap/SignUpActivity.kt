@@ -21,8 +21,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.cropswap.MainActivity
+import com.example.cropswap.LoginActivity
 import com.example.cropswap.ui.theme.CROPSWAPTheme
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class SignUpActivity : ComponentActivity() {
     private val auth = FirebaseAuth.getInstance()
@@ -81,7 +83,13 @@ class SignUpActivity : ComponentActivity() {
                         }
                         auth.createUserWithEmailAndPassword(email, password)
                             .addOnSuccessListener {
-                                startActivity(Intent(this@SignUpActivity, MainActivity::class.java))
+                                val userId = auth.currentUser?.uid
+                                val userMap = mapOf("email" to email)
+                                if (userId != null) {
+                                    FirebaseDatabase.getInstance().reference.child("users").child(userId).setValue(userMap)
+                                }
+                                Toast.makeText(this@SignUpActivity, "Account created! Please sign in.", Toast.LENGTH_LONG).show()
+                                startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
                                 finish()
                             }
                             .addOnFailureListener {
@@ -89,6 +97,15 @@ class SignUpActivity : ComponentActivity() {
                             }
                     }, modifier = Modifier.fillMaxWidth()) {
                         Text("Create Account")
+                    }
+
+                    Spacer(Modifier.height(16.dp))
+
+                    Button(onClick = {
+                        startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
+                        finish()
+                    }, modifier = Modifier.fillMaxWidth()) {
+                        Text("Back to Login")
                     }
                 }
             }

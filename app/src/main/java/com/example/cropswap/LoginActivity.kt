@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.ui.Modifier
 import com.google.firebase.auth.FirebaseAuth
 import android.Manifest
+import android.app.Activity
 import android.content.pm.PackageManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,6 +20,8 @@ import com.example.cropswap.ui.theme.CROPSWAPTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import androidx.compose.ui.platform.LocalContext
+import com.google.firebase.database.FirebaseDatabase
 
 class LoginActivity : ComponentActivity() {
 
@@ -41,6 +44,7 @@ class LoginActivity : ComponentActivity() {
         setContent {
             CROPSWAPTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
+                    val context = LocalContext.current
                     var isLoading by remember { mutableStateOf(false) }
                     var errorMessage by remember { mutableStateOf<String?>(null) }
 
@@ -52,7 +56,10 @@ class LoginActivity : ComponentActivity() {
                             }
                             // Request permission if needed
                             if (profilePhotoUri != null &&
-                                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                                ContextCompat.checkSelfPermission(
+                                    this,
+                                    Manifest.permission.READ_EXTERNAL_STORAGE
+                                ) != PackageManager.PERMISSION_GRANTED
                             ) {
                                 requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
                             }
@@ -72,8 +79,14 @@ class LoginActivity : ComponentActivity() {
                                     CoroutineScope(Dispatchers.IO).launch {
                                         db.tenderApplicationDao().insert(application)
                                     }
-                                    startActivity(Intent(this, MainActivity::class.java))
-                                    finish()
+                                    val userId = auth.currentUser?.uid
+                                    if (userId != null) {
+                                        FirebaseDatabase.getInstance().reference.child("users").child(userId).get().addOnSuccessListener { dataSnapshot ->
+                                            // You can use dataSnapshot to get user data if needed
+                                            startActivity(Intent(context, MainActivity::class.java))
+                                            //(context as? Activity)?.finish()
+                                        }
+                                    }
                                 }
                                 .addOnFailureListener {
                                     isLoading = false
@@ -95,9 +108,9 @@ class LoginActivity : ComponentActivity() {
                                 errorMessage = "Enter your email to reset password"
                             }
                         },
-                        onSignup = {
-                            startActivity(Intent(this, SignupActivity::class.java))
-                        }
+                        onSignUpClick = {context.startActivity(Intent(context, SignUpActivity::class.java))
+                        },
+                        onThemeToggle = {}
                     )
                 }
             }

@@ -29,7 +29,20 @@ class StaffSupportActivity : ComponentActivity() {
         setContent {
             CROPSWAPTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    OfficerList(officers)
+                    Column {
+                        Button(
+                            onClick = {
+                                startActivity(Intent(this@StaffSupportActivity, WelcomeActivity::class.java))
+                                finish()
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                        ) {
+                            Text("Back to Welcome")
+                        }
+                        OfficerList(officers)
+                    }
                 }
             }
         }

@@ -32,7 +32,10 @@ class TenderActivity : ComponentActivity() {
 
         setContent {
             CROPSWAPTheme {
-                TenderScreen()
+                TenderScreen(onBackToWelcome = {
+                    startActivity(Intent(this, WelcomeActivity::class.java))
+                    finish()
+                })
             }
         }
     }
@@ -46,7 +49,7 @@ data class Tender(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TenderScreen() {
+fun TenderScreen(onBackToWelcome: () -> Unit) {
     val context = LocalContext.current
     val tenders = remember {
         listOf(
@@ -78,6 +81,14 @@ fun TenderScreen() {
     Scaffold(
         topBar = {
             Column {
+                Button(
+                    onClick = onBackToWelcome,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                ) {
+                    Text("Back to Welcome")
+                }
                 TopAppBar(
                     title = { Text("Tender Opportunities") },
                     actions = {

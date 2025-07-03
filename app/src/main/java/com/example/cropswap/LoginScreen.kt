@@ -27,6 +27,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import coil3.compose.rememberAsyncImagePainter
 
 @Composable
 fun LoginScreen(
@@ -35,7 +36,7 @@ fun LoginScreen(
     onThemeToggle: () -> Unit,
     isLoading: Boolean,
     errorMessage: String?,
-    onForgotPassword: Any
+    onForgotPassword:(String)  -> Unit
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
