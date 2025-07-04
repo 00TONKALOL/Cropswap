@@ -1,9 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlin.plugin.compose") version "2.2.0"
     alias(libs.plugins.google.gms.google.services)
-    id("org.jetbrains.kotlin.kapt")
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
@@ -12,10 +11,19 @@ android {
 
     defaultConfig {
         applicationId = "com.example.cropswap"
-        minSdk = 23
+        minSdk = 24
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 
     buildTypes {
@@ -31,20 +39,9 @@ android {
     buildFeatures {
         compose = true
     }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.0"
-    }
-
-    kotlin {
-        compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_1_8)
-        }
-    }
 }
 
 dependencies {
-    implementation(libs.coil.compose)
     implementation(libs.core.ktx)
     implementation(libs.activity.compose)
     implementation(libs.material3)
@@ -61,11 +58,6 @@ dependencies {
     implementation(libs.ui.android)
     implementation(libs.room.common.jvm)
     implementation(libs.room.runtime.android)
-    implementation(libs.firebase.auth)
-    implementation(libs.credentials)
-    implementation(libs.credentials.play.services.auth)
-    implementation(libs.googleid)
-    kapt("androidx.room:room-compiler:2.7.2")
 }
 
 
