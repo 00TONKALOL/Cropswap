@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "922625420660",
+    "project_id": "cropswap01",
+    "storage_bucket": "cropswap01.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:922625420660:android:8eaade5e255becd5825021",
+        "android_client_info": {
+          "package_name": "com.example.cropswap"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBf5GqHHzzZ_-dK4uee9HwIi95naRLXDp0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

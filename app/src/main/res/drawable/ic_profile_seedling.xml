@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="96"
+    android:viewportHeight="96">
+    <!-- Seedling stem -->
+    <path
+        android:pathData="M48,78 L48,40"
+        android:strokeColor="#388E3C"
+        android:strokeWidth="4"
+        android:fillColor="@android:color/transparent" />
+    <!-- Left leaf -->
+    <path
+        android:pathData="M48,60 Q38,55 44,45 Q46,55 48,60"
+        android:fillColor="#66BB6A"
+        android:strokeColor="@android:color/transparent" />
+    <!-- Right leaf -->
+    <path
+        android:pathData="M48,60 Q58,55 52,45 Q50,55 48,60"
+        android:fillColor="#66BB6A"
+        android:strokeColor="@android:color/transparent" />
+</vector> 
